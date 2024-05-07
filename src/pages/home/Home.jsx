@@ -9,8 +9,8 @@ const Home = () => {
     <>
       <Layout>
         <HeroSection />
-        {/* <Category /> need data from backend and pictures
-        <HomePageProductCard /> need data from backend and pictures*/}
+        <Category />
+        <HomePageProductCard />
       </Layout>
     </>
   )

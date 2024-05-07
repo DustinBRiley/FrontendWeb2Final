@@ -1,9 +1,11 @@
 import { faMagnifyingGlass, faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import React from "react"
+import React, { useContext } from "react"
 import { Link } from "react-router-dom"
+import { CartContext } from "../../context/CartContext"
 
 const Navbar = () => {
+  const {userId} = useContext(CartContext)
   const navList = (
     <ul className="flex space-x-4 md:space-x-6 text-custom-mauve font-semibold text-sm md:text-base">
       <li>
@@ -12,13 +14,8 @@ const Navbar = () => {
         </Link>
       </li>
       <li>
-        <Link to={"/"} className="hover:text-custom-peach transistion-colors duration-200">
-          Products
-        </Link>
-      </li>
-      <li>
-        <Link to={"/"} className="hover:text-custom-peach transistion-colors duration-200">
-          About
+        <Link to={"/Shop"} className="hover:text-custom-peach transistion-colors duration-200">
+          Shop
         </Link>
       </li>
     </ul>
@@ -30,19 +27,19 @@ const Navbar = () => {
           <div className="text-left">
             <Link to={"/"}>
               <h2 className="font-bold text-white text-lg md:text-2xl hover:text-gray-700">
-                Ecommerce
+                Joe Momma's Shoes
               </h2>
             </Link>
           </div>
           <div>{navList}</div>
           <div className="flex items-center space-x-4">
-            <Link to={"/search"} className="text-white hover:text-gray-700">
+            <Link to={"/Shop"} className="text-white hover:text-gray-700">
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </Link>
-            <Link to={"/search"} className="text-white hover:text-gray-700">
+            <Link to={!userId ? "/Login" : "/Account"} className="text-white hover:text-gray-700">
               <FontAwesomeIcon icon={faUser} />
             </Link>
-            <Link to={"/search"} className="text-white hover:text-gray-700">
+            <Link to={"/Checkout"} className="text-white hover:text-gray-700">
               <FontAwesomeIcon icon={faShoppingCart} />
             </Link>
           </div>
