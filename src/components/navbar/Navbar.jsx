@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { CartContext } from "../../context/CartContext"
 
 const Navbar = () => {
-  const {userId} = useContext(CartContext)
+  const { userId } = useContext(CartContext)
   const navList = (
     <ul className="flex space-x-4 md:space-x-6 text-custom-mauve font-semibold text-sm md:text-base">
       <li>

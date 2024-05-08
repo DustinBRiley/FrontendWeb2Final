@@ -9,8 +9,10 @@ const Shop = () => {
         <>
             <Layout>
                 <Searchbar />
-                <Items />
-                <Cart />
+                <div className='flex justify-between bg-teal-900'>
+                    <Items />
+                    <Cart />
+                </div>
             </Layout>
         </>
     )

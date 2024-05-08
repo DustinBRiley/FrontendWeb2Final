@@ -1,64 +1,58 @@
 import React from 'react'
 
+const result = await fetch("https://cord-nutritious-chasmosaurus.glitch.me/items")
+const items = await result.json()
 
 export const CartContext = React.createContext()
 export const CartProvider = ({children}) => {
     const [cart, setCart] = React.useState([])
 
-    const addtoCart = (item) => {
-        const existingItem = cart.find((cartItem) => cartItem._id === item._id)
-        if(existingItem) {
-            setCart(
-                cart.map((cartItem) => (cartItem._id === item._id)
-                ? { ...cartItem, quantity: cartItem.quantity + 1}
-                : cartItem
-            ))
-        } else {
-            setCart([...cart, {...item,quantity: 1}])
-        }
-        console.log(cart)
-    }
-
-    const [userId, setUserId] = React.useState()
-
-    const login = async (username, password) => {
-        const result = await fetch("https://cord-nutritious-chasmosaurus.glitch.me/users")
-        const users = await result.json()
-
-        const user = users.find((user) => user.username === username)
-        if(user.password === password) {
-            setUserId(user._id)
-        }
-    }
-
-    const register = async (username, password) => {
-        const result = await fetch("https://cord-nutritious-chasmosaurus.glitch.me/users")
-        const users = await result.json()
-
-        const user = users.find((user) => user.username === username)
-        if(!user) {
-            const user = {
-                username: username,
-                password: password
+    const addtoCart = (_id) => {
+        let index = cart.findIndex((el) => el.item._id === _id)
+        if(index === -1) { // not in cart add to cart
+            for(let i=0;i<items.length;i++) {
+                if(items[i]._id === _id) {
+                    setCart([...cart,{item: items[i], quantity: 1}])
+                }
             }
-            await fetch("https://cord-nutritious-chasmosaurus.glitch.me/users", {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(user)
+        } else { // in cart find it and ++
+            const arr = cart.map((cartItem, i) => {
+                if(i === index) {
+                    cartItem.quantity++
+                    return cartItem
+                } else {
+                    return cartItem
+                }
             })
-            return true
-        } else {
-            return false
+            setCart(arr)
         }
     }
 
+    const removeFromCart = (_id) => {
+        let index = cart.findIndex((el) => el.item._id === _id)
+        if(cart[index].quantity > 1) {
+            const arr = cart.map((cartItem, i) => {
+                if(i === index) {
+                    cartItem.quantity--
+                    return cartItem
+                } else {
+                    return cartItem
+                }
+            })
+            setCart(arr)
+        } else {
+            const arr = cart.filter(a => a.item._id !== _id)
+            setCart(arr)
+        }
+    }
+
+    const [username, setUsername] = React.useState("")
+    const [password, setPassword] = React.useState("")
+    const [userId, setUserId] = React.useState("")
     const [search, setSearch] = React.useState("")
 
     return (
-        <CartContext.Provider value={{cart, addtoCart, userId, login, register, search, setSearch}}>
+        <CartContext.Provider value={{cart, addtoCart, removeFromCart, userId, setUserId, username, setUsername, password, setPassword, search, setSearch}}>
             {children}
         </CartContext.Provider>
     )
