@@ -4,17 +4,22 @@ import ShippingInfo from '../../components/shippingInfo/ShippingInfo'
 import Totals from '../../components/totals/Totals'
 import CardInfo from '../../components/cardInfo/CardInfo'
 import CheckoutCart from '../../components/checkoutCart/CheckoutCart'
-import { CartContext } from '../../context/CartContext'
 
 const Checkout = () => {
-    const {cart} = React.useContext(CartContext)
     return (
         <>
             <Layout>
-                <ShippingInfo />
-                <Totals />
-                <CardInfo />
-                <CheckoutCart />
+                <div className='bg-teal-900 w-screen'>
+                    <h2 className='text-center text-2xl'>Checkout</h2>
+                    <div className='flex justify-between w-screen'>
+                        <ShippingInfo />
+                        <Totals />
+                    </div>
+                    <div className='flex justify-between w-screen h-full'>
+                        <CardInfo />
+                        <CheckoutCart />
+                    </div>
+                </div>
             </Layout>
         </>
     )
